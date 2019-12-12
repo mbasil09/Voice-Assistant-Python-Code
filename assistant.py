@@ -8,11 +8,12 @@ import webbrowser
 import os
 # import pyaudio
 
-engine=pyttsx3.init('sapi5')
+engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-engine.setProperty('voice',voices[0].id)
+engine.setProperty('voice', voices[0].id)
 
-def sendEmail(to,content):
+
+def sendEmail(to, content):
     pass
 
 
@@ -21,31 +22,32 @@ def speak(audio):
     engine.say(audio)
     engine.runAndWait()
 
+
 def wishuser():
-    hour =int( datetime.datetime.now().hour)
-    if (hour>= 0 and hour<=12):
+    hour = int(datetime.datetime.now().hour)
+    if (hour >= 0 and hour <= 12):
         speak("Good Morning")
-    elif (hour >12 and hour<=18):
+    elif (hour > 12 and hour <= 18):
         speak("Good Afternoon")
-    elif (hour >18 and hour <24):
+    elif (hour > 18 and hour < 24):
         speak("Good Night")
 
     speak("Hello, I am your assistant David. How may I help you?")
 
+
 def takeCommand():
     # it takes microphone voice as input and shows us the output as string.
-    r= sr.Recognizer()
+    r = sr.Recognizer()
 
     with sr.Microphone() as source:
         print("Listening...")
-        r.pause_threshold=1
+        r.pause_threshold = 1
         audio = r.listen(source)
 
     try:
         print("Recognizing....")
         query = r.recognize_google(audio, language='en-in')
         print(" User said - " + query)
-
 
     # except sr.UnknownValueError:
     #     print("Could not understand audio")
@@ -56,9 +58,7 @@ def takeCommand():
         print("Say that again please")
         return "None"
 
-
     return query
-
 
 
 if __name__ == "__main__":
@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
         if "wikipedia" in query:
             speak("Searching results on wikipedia..")
-            query=query.replace("wikipedia","")
+            query = query.replace("wikipedia", "")
             results = wikipedia.summary(query, sentences=2)
             speak("according to wikipedia ,")
             speak(results)
@@ -92,13 +92,12 @@ if __name__ == "__main__":
                 speak("sending email to self..")
                 to = "harman18284@gmail.com"
                 content = "Hey bro"
-                sendEmail(to,content)
+                sendEmail(to, content)
                 speak("Email sent")
 
             except Exception as e:
                 print(e)
                 speak("Email sending failed..")
-
 
 
 # print("hello")
